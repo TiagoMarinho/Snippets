@@ -1,0 +1,17 @@
+{
+	"set snippet success": "Snippet `{0}` added",
+	"set snippet modal title": "Create new snippet",
+	"set snippet modal name label": "Name",
+	"set snippet modal title label": "Title",
+	"set snippet modal content label": "Contents",
+
+	"list snippets embed description": "Your available snippets",
+	"list snippets embed snippet title label": "Title",
+	"list snippets embed snippet content label": "Content",
+	"list snippets embed snippet uses label": "Uses",
+	"list snippets embed snippet author label": "Author",
+
+	"delete snippet success reply": "Snippet `{0}` deleted",
+
+	"snippet not found": "A snippet with the name `{0}` was not found"
+}

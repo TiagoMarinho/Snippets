@@ -1,0 +1,1 @@
+export const limit = (string, length, end = "...") => string.length < length ? string : string.substring(0, length).trim() + end

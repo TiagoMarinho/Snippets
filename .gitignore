@@ -1,0 +1,4 @@
+/config.json
+/node_modules
+src/database/database.sqlite
+.vscode
