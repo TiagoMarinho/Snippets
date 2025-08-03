@@ -10,7 +10,6 @@ export default class Snippet extends Model {
 			},
 			name: {
 				type: DataTypes.STRING,
-				unique: true,
 			},
 			title: DataTypes.STRING,
 			content: DataTypes.STRING,

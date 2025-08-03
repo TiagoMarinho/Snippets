@@ -57,7 +57,7 @@ const listSnippets = async interaction => {
 		.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
 		.addFields(...fields)
 
-	const snippetCount = Snippet.count()
+	const snippetCount = await Snippet.count({ where: { guildId } })
 
 	const isFirstPage = pageNumber === 0
 	const isLastPage = ((pageNumber + 1) * ITEMS_PER_PAGE > snippetCount)
