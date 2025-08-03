@@ -18,9 +18,8 @@ import 'dotenv/config'
 
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`)
-
 		const data = await rest.put(
-			Routes.applicationCommands(process.env.CONFIG_ID),
+			Routes.applicationCommands(process.env.CLIENT_ID),
 			{ body: commands },
 		)
 
