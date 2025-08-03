@@ -8,11 +8,13 @@ const deleteSnippet = async (interaction) => {
 
 	const id = interaction.user.id
 	const name = interaction.options.getString(`name`)
+	const guildId = interaction.guild.id
 
 	const snippet = await Snippet.findOne({
 		where: {
 			userId: id,
-			name
+			name,
+			guildId,
 		}
 	})
 
