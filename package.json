@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/main.mjs",
   "scripts": {
+    "start": "node src/main.mjs",
     "register": "node src/register-commands.mjs"
   },
   "author": "",
