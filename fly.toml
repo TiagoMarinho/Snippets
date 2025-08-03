@@ -1,0 +1,24 @@
+# fly.toml
+
+app = "snippets"
+primary_region = "fra"
+
+[env]
+  DATABASE_PATH = "/data/database.sqlite"
+
+[deploy]
+  release_command = "npm run register"
+
+[processes]
+  app = "npm run start"
+
+[mounts]
+  source="snippets_data"
+  destination="/data"
+
+[[services]]
+  internal_port = 8080
+  processes = ["app"]
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
