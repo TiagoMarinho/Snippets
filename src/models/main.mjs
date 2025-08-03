@@ -3,9 +3,11 @@ import { Sequelize } from 'sequelize'
 import User from './user.mjs'
 import Snippet from './snippet.mjs'
 
+const storagePath = process.env.DATABASE_PATH || 'src/database/database.sqlite'
+
 const sequelize = new Sequelize({
 	dialect: 'sqlite',
-	storage: 'src/database/database.sqlite'
+	storage: storagePath
 })
 
 User.init(sequelize)
