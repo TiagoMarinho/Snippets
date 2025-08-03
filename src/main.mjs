@@ -1,11 +1,11 @@
 import { Client, Events, GatewayIntentBits, Collection } from 'discord.js'
-import config from '../config.json' assert { type: 'json' }
 import fs from 'node:fs'
 import getCommandsByCategory from './get-commands.mjs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 import { syncDatabase } from './models/main.mjs'
+import 'dotenv/config'
 
 class DiscordBot {
 	client = new Client({ intents: [GatewayIntentBits.Guilds] })
@@ -37,7 +37,7 @@ class DiscordBot {
 		syncDatabase()
 		this.loadEvents()
 		this.loadCommands()
-		this.client.login(config.token)
+		this.client.login(process.env.DISCORD_TOKEN)
 
 		return this
 	}

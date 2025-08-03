@@ -1,6 +1,6 @@
 import { REST, Routes } from 'discord.js'
-import config from '../config.json' assert { type: 'json' }
 import getCommandsByCategory from './get-commands.mjs'
+import 'dotenv/config'
 
 (async () => {
 
@@ -14,7 +14,7 @@ import getCommandsByCategory from './get-commands.mjs'
 		}
 	}
 
-	const rest = new REST({ version: '10' }).setToken(config.token)
+	const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN)
 
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`)
