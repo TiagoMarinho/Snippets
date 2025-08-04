@@ -13,5 +13,7 @@
 
 	"delete snippet success reply": "Snippet `{0}` deleted",
 
-	"snippet not found": "A snippet with the name `{0}` was not found"
+	"snippet not found": "A snippet with the name `{0}` was not found",
+
+	"list snippets no snippets found": "There are no snippets to display in this server."
 }

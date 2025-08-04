@@ -5,10 +5,13 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "disc
 import emojis from '../../../../shared/emojis.json' assert { type: 'json' }
 import colors from '../../../../shared/colors.json' assert { type: 'json' }
 
+const ITEMS_PER_PAGE = 10
+
 export const createListPage = async (interaction, pageNumber) => {
 	const { guildId, user, locale } = interaction
-	const ITEMS_PER_PAGE = 10
+
 	const offset = pageNumber * ITEMS_PER_PAGE
+	const snippetCount = await Snippet.count({ where: { guildId } })
 
 	const snippets = await Snippet.findAll({
 		order: [[`usages`, `DESC`]],
@@ -50,8 +53,6 @@ export const createListPage = async (interaction, pageNumber) => {
 		.setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
 		.addFields(...fields)
 
-	const snippetCount = await Snippet.count({ where: { guildId } })
-
 	const isFirstPage = pageNumber === 0
 	const isLastPage = (pageNumber + 1) * ITEMS_PER_PAGE >= snippetCount
 
@@ -86,8 +87,22 @@ export const createListPage = async (interaction, pageNumber) => {
 
 const listSnippets = async interaction => {
 	await interaction.deferReply({ ephemeral: true })
-	const pageNumber = (interaction.options.getNumber(`page`) ?? 1) - 1
-	const listPage = await createListPage(interaction, pageNumber)
+
+	const { guildId, locale } = interaction
+	const snippetCount = await Snippet.count({ where: { guildId } })
+
+	if (snippetCount === 0) {
+		const noSnippetsReply = getLocalizedText('list snippets no snippets found', locale)
+		return interaction.editReply({ content: noSnippetsReply, ephemeral: true })
+	}
+
+	const maxPage = Math.ceil(snippetCount / ITEMS_PER_PAGE)
+	const requestedPage = interaction.options.getNumber(`page`) ?? 1
+	
+	// If the requested page is out of bounds, simply show the last page.
+	const pageToShow = Math.min(requestedPage, maxPage)
+
+	const listPage = await createListPage(interaction, pageToShow - 1)
 	return interaction.editReply(listPage)
 }
 
