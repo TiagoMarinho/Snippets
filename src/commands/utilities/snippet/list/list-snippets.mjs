@@ -5,76 +5,67 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "disc
 import emojis from '../../../../shared/emojis.json' assert { type: 'json' }
 import colors from '../../../../shared/colors.json' assert { type: 'json' }
 
-const listSnippets = async interaction => {
-
-	const replyDeferral = interaction.deferReply({ ephemeral: true })
-
-	const userId = interaction.user.id
-	const guildId = interaction.guild.id
-	const pageNumber = (interaction.options.getNumber(`page`) ?? 1) - 1
-
+export const createListPage = async (interaction, pageNumber) => {
+	const { guildId, user, locale } = interaction
 	const ITEMS_PER_PAGE = 10
 	const offset = pageNumber * ITEMS_PER_PAGE
 
 	const snippets = await Snippet.findAll({
 		order: [[`usages`, `DESC`]],
-		where: {
-			guildId
-		},
-		limit: 25,
+		where: { guildId },
+		limit: ITEMS_PER_PAGE,
 		offset
 	})
 
 	const MAX_CONTENT_LENGTH = 40
 	const FIELD_SEPARATOR = ": "
 
-	const contentLabel = getLocalizedText(`list snippets embed snippet content label`, interaction.locale)
-	const titleLabel = getLocalizedText(`list snippets embed snippet title label`, interaction.locale)
-	const usesLabel = getLocalizedText(`list snippets embed snippet uses label`, interaction.locale)
-	const authorLabel = getLocalizedText(`list snippets embed snippet author label`, interaction.locale)
+	const contentLabel = getLocalizedText(`list snippets embed snippet content label`, locale)
+	const titleLabel = getLocalizedText(`list snippets embed snippet title label`, locale)
+	const usesLabel = getLocalizedText(`list snippets embed snippet uses label`, locale)
+	const authorLabel = getLocalizedText(`list snippets embed snippet author label`, locale)
 
-	const formatContent = str => 
+	const formatContent = str =>
 		limit(str, MAX_CONTENT_LENGTH)
 			.replace(/`/g, ``)
 			.replace(/\n/g, ` `)
 
 	const fields = snippets.map(snippet => ({
-			name: `\`${snippet.name.replace(/`/g, ``)}\``,
-			value: [
-				snippet.title ? [titleLabel, `\`${formatContent(snippet.title)}\``] : [],
-				[contentLabel, `\`${formatContent(snippet.content)}\``],
-				[usesLabel, `\`${snippet.usages}\``],
-				[authorLabel, `<@${snippet.userId}>`],
-			]
-			.map(field => field.join(FIELD_SEPARATOR))
-			.join("\n"),
-		}))
+		name: `\`${snippet.name.replace(/`/g, ``)}\``,
+		value: [
+			snippet.title ? [titleLabel, `\`${formatContent(snippet.title)}\``] : [],
+			[contentLabel, `\`${formatContent(snippet.content)}\``],
+			[usesLabel, `\`${snippet.usages}\``],
+			[authorLabel, `<@${snippet.userId}>`],
+		]
+		.filter(field => field.length > 0)
+		.map(field => field.join(FIELD_SEPARATOR))
+		.join("\n"),
+	}))
 
-	const listEmbedDescription = getLocalizedText(`list snippets embed description`, interaction.locale)
+	const listEmbedDescription = getLocalizedText(`list snippets embed description`, locale)
 	const embed = new EmbedBuilder()
 		.setDescription(listEmbedDescription)
 		.setColor(colors.snippet)
-		.setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
+		.setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
 		.addFields(...fields)
 
 	const snippetCount = await Snippet.count({ where: { guildId } })
 
 	const isFirstPage = pageNumber === 0
-	const isLastPage = ((pageNumber + 1) * ITEMS_PER_PAGE > snippetCount)
+	const isLastPage = (pageNumber + 1) * ITEMS_PER_PAGE >= snippetCount
 
 	const row = new ActionRowBuilder()
 
-	const previousPageNumber = pageNumber - 1
-	const nextPageNumber = pageNumber + 1
 	const buttonData = [
 		{
-			id: `snippet-list-page-${previousPageNumber}`,
+			id: `snippet-list-page-${pageNumber - 1}`,
 			emoji: emojis.previous,
 			style: ButtonStyle.Primary,
 			disabled: isFirstPage
 		},
 		{
-			id: `snippet-list-page-${nextPageNumber}`,
+			id: `snippet-list-page-${pageNumber + 1}`,
 			emoji: emojis.next,
 			style: ButtonStyle.Primary,
 			disabled: isLastPage
@@ -90,9 +81,14 @@ const listSnippets = async interaction => {
 
 	row.addComponents(...buttons)
 
-	await replyDeferral
-	
-	return interaction.editReply({ embeds: [embed], components: [row], ephemeral: true })
+	return { embeds: [embed], components: [row], ephemeral: true }
+}
+
+const listSnippets = async interaction => {
+	await interaction.deferReply({ ephemeral: true })
+	const pageNumber = (interaction.options.getNumber(`page`) ?? 1) - 1
+	const listPage = await createListPage(interaction, pageNumber)
+	return interaction.editReply(listPage)
 }
 
 export default listSnippets
