@@ -23,6 +23,12 @@ export default class Snippet extends Model {
 			modelName: 'Snippet',
 			tableName: 'snippets',
 			timestamps: true,
+			indexes: [
+				{
+					unique: true,
+					fields: ['name', 'userId', 'guildId']
+				}
+			]
 		})
 	}
 }
