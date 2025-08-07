@@ -1,9 +1,9 @@
-import Snippet from "../../../../models/snippet.mjs"
-import { getLocalizedText } from "../../../../locale/languages.mjs"
-import { limit } from "../../../../utils/formatting.mjs"
+import Snippet from "../../../models/snippet.mjs"
+import { getLocalizedText } from "../../../locale/languages.mjs"
+import { limit } from "../../../utils/formatting.mjs"
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js"
-import emojis from '../../../../shared/emojis.json' assert { type: 'json' }
-import colors from '../../../../shared/colors.json' assert { type: 'json' }
+import emojis from '../../../shared/emojis.json' assert { type: 'json' }
+import colors from '../../../shared/colors.json' assert { type: 'json' }
 
 const ITEMS_PER_PAGE = 10
 

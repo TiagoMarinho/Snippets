@@ -1,4 +1,4 @@
-import { createSetSnippetModal } from "../../../../modals/set-snippet-modal.mjs"
+import { createSetSnippetModal } from "../../../modals/set-snippet-modal.mjs"
 
 const setSnippet = async interaction => {
 	const modal = await createSetSnippetModal(interaction.locale)

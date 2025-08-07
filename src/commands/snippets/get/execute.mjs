@@ -1,7 +1,7 @@
-import Snippet from "../../../../models/snippet.mjs"
+import Snippet from "../../../models/snippet.mjs"
 import { EmbedBuilder } from "discord.js"
-import colors from '../../../../shared/colors.json' assert { type: 'json' }
-import { getLocalizedText } from "../../../../locale/languages.mjs"
+import colors from '../../../shared/colors.json' assert { type: 'json' }
+import { getLocalizedText } from "../../../locale/languages.mjs"
 
 const getSnippet = async interaction => {
 

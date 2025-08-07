@@ -1,5 +1,5 @@
 import { Events } from 'discord.js'
-import { createListPage } from '../commands/utilities/snippet/list/list-snippets.mjs'
+import { createListPage } from '../commands/snippets/list/execute.mjs'
 
 export default {
 	name: Events.InteractionCreate,

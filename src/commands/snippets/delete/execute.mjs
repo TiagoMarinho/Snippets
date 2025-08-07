@@ -1,6 +1,5 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js"
-import { getLocalizedText } from "../../../../locale/languages.mjs"
-import Snippet from "../../../../models/snippet.mjs"
+import { getLocalizedText } from "../../../locale/languages.mjs"
+import Snippet from "../../../models/snippet.mjs"
 
 const deleteSnippet = async (interaction) => {
 
