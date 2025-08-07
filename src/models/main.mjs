@@ -7,7 +7,8 @@ const storagePath = process.env.DATABASE_PATH || 'src/database/database.sqlite'
 
 const sequelize = new Sequelize({
 	dialect: 'sqlite',
-	storage: storagePath
+	storage: storagePath,
+	logging: false,
 })
 
 User.init(sequelize)
