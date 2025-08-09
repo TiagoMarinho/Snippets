@@ -26,24 +26,26 @@
 
 The bot is designed to be as simple as possible.
 
-- **To create a snippet**: Use `/snippet set`. This will open a form.
-- **To retrieve a snippet**: Use `/snippet get` and start typing its name. The bot will help you find it.
+- **To create a snippet**: Use `/set`. This will open a form.
+- **To retrieve a snippet**: Use `/get` and start typing its name. The bot will help you find it.
 
 ```
-/snippet get name: rules
+/get name: rules
 ```
 This command will first look for a snippet you own named "rules". If you don't have one, it will find the most popular public snippet named "rules" in the server.
 
 ## Commands
 
-* ` /snippet set `
-  * Opens a modal to create a new snippet or update an existing one you own.
-* ` /snippet get <name> `
+* ` /set `
+  * Opens a modal to create a new snippet.
+* ` /get <name> `
   * Retrieves a snippet.
   * Also accepts optional arguments: `<author>` (to get a snippet from a specific user) and `<mention>` (to ping a user with the snippet).
-* ` /snippet delete <name> `
+* ` /delete <name> `
   * Deletes one of your snippets.
-* ` /snippet list `
+* ` /edit <name> `
+  * Opens a model to edit one of your snippets.
+* ` /list `
   * Displays a paginated list of all snippets in the server, sorted by popularity.
   * Also accepts an optional argument: `<page>` (to jump directly to a specific page).
 
@@ -104,7 +106,7 @@ After completing the installation, you can start the bot with this command:
 ```bash
 npm run start
 ```
-The console should print Ready! Logged in as YourBotName. Your bot is now online and ready to use!
+The console should print "Ready! Logged in as YourBotName." Your bot is now online and ready to use!
 
 ## Contributing
 
@@ -112,7 +114,7 @@ Contributions are welcome! Whether it's reporting a bug, suggesting a feature, o
 
 A basic overview of the project structure:
 - `src/main.mjs`: The main entry point that initializes the client and loads commands/events.
-- `src/commands/utilities/snippet`: This directory contains all logic for the /snippet command, neatly organized by subcommand (get, set, delete, etc.).
-- `src/models/`: Contains the Sequelize database models (User.mjs, Snippet.mjs).
-- `src/events/`: Contains handlers for Discord gateway events (e.g., command.mjs for command interactions).
-src/locale/: Contains localization files for multi-language support.
+- `src/commands/snippets/`: This directory contains all the core commands for the bot (`get`, `set`, `delete`, `edit` etc.).
+- `src/models/`: Contains the Sequelize database models (`User.mjs`, `Snippet.mjs`).
+- `src/events/`: Contains handlers for Discord gateway events (e.g., `command.mjs` for command interactions).
+- `src/locale/`: Contains localization files for multi-language support.
