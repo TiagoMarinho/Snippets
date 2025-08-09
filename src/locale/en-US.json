@@ -5,6 +5,9 @@
 	"set snippet modal title label": "Title",
 	"set snippet modal content label": "Contents",
 
+	"edit snippet modal title": "Edit snippet",
+	"edit snippet success": "Snippet `{0}` edited successfully",
+
 	"list snippets embed description": "Your available snippets",
 	"list snippets embed snippet title label": "Title",
 	"list snippets embed snippet content label": "Content",

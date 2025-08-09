@@ -4,16 +4,16 @@ import User from "../models/user.mjs"
 import Snippet from "../models/snippet.mjs"
 import limits from '../shared/limits.json' assert { type: 'json' }
 
-export const createSetSnippetModal = async (locale) => {
+export const createEditSnippetModal = async (locale, snippetId, name, title, content) => {
 	const [modalTitle, titleLabel, nameLabel, contentLabel] = [
-		getLocalizedText(`set snippet modal title`, locale),
+		getLocalizedText(`edit snippet modal title`, locale),
 		getLocalizedText(`set snippet modal title label`, locale),
 		getLocalizedText(`set snippet modal name label`, locale),
 		getLocalizedText(`set snippet modal content label`, locale),
 	]
 
 	const modal = new ModalBuilder()
-		.setCustomId('set-snippet-modal')
+		.setCustomId(`edit-snippet-modal#id=${snippetId}`)
 		.setTitle(modalTitle)
 
 	const nameInput = new TextInputBuilder()
@@ -23,6 +23,7 @@ export const createSetSnippetModal = async (locale) => {
 		.setMaxLength(limits.MAX_NAME_LENGTH)
 		.setPlaceholder('Name of your snippet')
 		.setRequired(true)
+		.setValue(name)
 
 	const titleInput = new TextInputBuilder()
 		.setCustomId('titleInput')
@@ -31,6 +32,7 @@ export const createSetSnippetModal = async (locale) => {
 		.setMaxLength(limits.MAX_TITLE_LENGTH)
 		.setPlaceholder('Title of your snippet')
 		.setRequired(false)
+		.setValue(title || "")
 
 	const contentInput = new TextInputBuilder()
 		.setCustomId('contentInput')
@@ -39,6 +41,7 @@ export const createSetSnippetModal = async (locale) => {
 		.setMaxLength(limits.MAX_CONTENT_LENGTH)
 		.setPlaceholder('Text to be saved')
 		.setRequired(true)
+		.setValue(content || "")
 
 	const nameActionRow = new ActionRowBuilder().addComponents(nameInput)
 	const titleActionRow = new ActionRowBuilder().addComponents(titleInput)
@@ -49,31 +52,35 @@ export const createSetSnippetModal = async (locale) => {
 	return modal
 }
 
-export const handleSetSnippetModalSubmit = async interaction => {
+export const handleEditSnippetModalSubmit = async interaction => {
 	const replyDeferral = interaction.deferReply({ ephemeral: true })
 
-	const id = interaction.user.id
-	const username = interaction.user.username
+	const userId = interaction.user.id
 	const guildId = interaction.guild.id
-
-	await User.findOrCreate({ 
-		where: { id },
-		defaults: { username } 
-	})
+	const match = interaction.customId.match(/#id=(\d+)/)
+	const snippetId = match?.[1]
 
 	const name = interaction.fields.getTextInputValue(`nameInput`)
 	const title = interaction.fields.getTextInputValue(`titleInput`)
 	const content = interaction.fields.getTextInputValue(`contentInput`)
 
-	await Snippet.upsert({
-		userId: id,
+	const conflictingSnippet = await Snippet.findOne({ where: { name, userId, guildId } })
+	if (conflictingSnippet && String(conflictingSnippet.id) !== snippetId)
+		await conflictingSnippet.destroy()
+
+	await Snippet.update({
 		name,
 		title,
-		content,
-		guildId
+		content
+	}, {
+		where: {
+			id: snippetId,
+			userId,
+			guildId
+		}
 	})
 
 	await replyDeferral
 	
-	return interaction.editReply({ content: getLocalizedText("set snippet success", interaction.locale, name) })
+	return interaction.editReply({ content: getLocalizedText("edit snippet success", interaction.locale, name) })
 }
