@@ -6,7 +6,7 @@ const autocomplete = async interaction => {
 	const autocompleteHandlerById = {
 		name: handleNameAutocomplete
 	}
-	autocompleteHandlerById[focusedOption.name](interaction)
+	autocompleteHandlerById[focusedOption.name](interaction, true)
 }
 
 export default autocomplete
