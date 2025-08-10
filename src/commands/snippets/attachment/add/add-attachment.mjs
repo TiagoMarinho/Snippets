@@ -1,6 +1,7 @@
 import { getLocalizedText } from "../../../../locale/languages.mjs"
 import Snippet from "../../../../models/snippet.mjs"
 import Attachment from "../../../../models/attachment.mjs"
+import limits from "../../../../shared/limits.json" assert { type: 'json' }
 
 const addAttachment = async interaction => {
 	const deferral = interaction.deferReply({ ephemeral: true })
@@ -22,12 +23,24 @@ const addAttachment = async interaction => {
 
 	const snippet = await Snippet.findOne({
 		where: { name: snippetName, userId, guildId },
+		include: { model: Attachment, as: 'attachments' },
 	})
 
 	await deferral
 
 	if (!snippet) {
 		const reply = getLocalizedText("snippet not found", interaction.locale, snippetName)
+		return interaction.editReply({ content: reply })
+	}
+
+	const currentCount = snippet.attachments?.length ?? 0
+	if (currentCount >= limits.MAX_ATTACHMENTS_PER_SNIPPET) {
+		const reply = getLocalizedText(
+			"attachment limit reached",
+			interaction.locale,
+			snippetName,
+			limits.MAX_ATTACHMENTS_PER_SNIPPET
+		)
 		return interaction.editReply({ content: reply })
 	}
 

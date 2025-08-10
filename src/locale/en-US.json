@@ -14,6 +14,7 @@
 	"attachment upload failed": "An error occurred while uploading the file. The bot may be missing 'Attach Files' permissions in its storage channel",
 	"attachment upload retrieval failed": "An error occurred after uploading. The uploaded file could not be retrieved",
 	"attachment db save failed": "An error occurred while saving the attachment to the database",
+	"attachment limit reached": "Snippet `{0}` has reached the maximum number of attachments (`{1}`)",
 
 	"clear attachments success": "All attachments have been cleared from snippet `{0}`",
 
