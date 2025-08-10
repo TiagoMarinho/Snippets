@@ -4,8 +4,6 @@ import colors from '../../../shared/colors.json' assert { type: 'json' }
 import { getLocalizedText } from "../../../locale/languages.mjs"
 
 const getSnippetEmbed = async snippet => {
-	snippet.increment(`usages`)
-
 	const embed = new EmbedBuilder()
 		.setTitle(snippet.title || null)
 		.setDescription(snippet.content)
