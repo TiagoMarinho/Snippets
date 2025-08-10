@@ -8,6 +8,15 @@
 	"edit snippet modal title": "Edit snippet",
 	"edit snippet success": "Snippet `{0}` edited successfully",
 
+	"add attachment success": "Attachment `{0}` was added to snippet `{1}`",
+	"attachment storage not configured": "The attachment storage feature has not been configured by the bot owner",
+	"attachment storage channel invalid": "An error occurred. The bot's storage channel is invalid or could not be found",
+	"attachment upload failed": "An error occurred while uploading the file. The bot may be missing 'Attach Files' permissions in its storage channel",
+	"attachment upload retrieval failed": "An error occurred after uploading. The uploaded file could not be retrieved",
+	"attachment db save failed": "An error occurred while saving the attachment to the database",
+
+	"clear attachments success": "All attachments have been cleared from snippet `{0}`",
+
 	"list snippets embed description": "Your available snippets",
 	"list snippets embed snippet title label": "Title",
 	"list snippets embed snippet content label": "Content",
@@ -18,5 +27,5 @@
 
 	"snippet not found": "A snippet with the name `{0}` was not found",
 
-	"list snippets no snippets found": "There are no snippets to display in this server."
+	"list snippets no snippets found": "There are no snippets to display in this server"
 }

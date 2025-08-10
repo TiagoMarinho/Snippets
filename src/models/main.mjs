@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize'
 
 import User from './user.mjs'
 import Snippet from './snippet.mjs'
+import Attachment from './attachment.mjs'
 
 const storagePath = process.env.DATABASE_PATH || 'src/database/database.sqlite'
 
@@ -11,11 +12,12 @@ const sequelize = new Sequelize({
 	logging: false,
 })
 
-User.init(sequelize)
-Snippet.init(sequelize)
+const models = { User, Snippet, Attachment }
+Object.values(models).forEach(model => model.init(sequelize))
 
-User.hasMany(Snippet, { foreignKey: 'userId', onDelete: 'CASCADE' })
-Snippet.belongsTo(User, { foreignKey: 'userId' })
+Object.values(models)
+	.filter(model => typeof model.associate === 'function')
+	.forEach(model => model.associate(models))
 
 export const syncDatabase = async () => {
 	try {

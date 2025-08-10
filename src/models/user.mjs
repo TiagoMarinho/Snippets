@@ -15,4 +15,7 @@ export default class User extends Model {
 			tableName: 'users',
 		})
 	}
+	static associate (models) {
+		this.hasMany(models.Snippet, { foreignKey: 'userId', onDelete: 'CASCADE' })
+	}
 }

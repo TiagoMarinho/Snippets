@@ -31,4 +31,14 @@ export default class Snippet extends Model {
 			]
 		})
 	}
+	static associate (models) {
+		this.belongsTo(models.User, {
+			foreignKey: 'userId',
+		});
+
+		this.hasMany(models.Attachment, {
+			foreignKey: 'snippetId',
+			as: 'attachments',
+		});
+	}
 }
