@@ -26,8 +26,10 @@
 	"list snippets embed snippet content label": "Content",
 	"list snippets embed snippet uses label": "Uses",
 	"list snippets embed snippet author label": "Author",
+	"list snippets embed page number": "Page {0} of {1}",
 
-	"delete snippet success reply": "Snippet `{0}` deleted",
+	"delete snippet success": "Snippet `{0}` deleted",
+	"purge snippet success": "Snippet `{0}` purged",
 
 	"snippet not found": "A snippet with the name `{0}` was not found",
 

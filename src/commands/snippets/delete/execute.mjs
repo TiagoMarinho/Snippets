@@ -18,7 +18,7 @@ const deleteSnippet = async (interaction) => {
 	})
 
 	const snippetNotFoundReply = getLocalizedText(`snippet not found`, interaction.locale, name)
-	const destroySuccessReply = getLocalizedText(`delete snippet success reply`, interaction.locale, name)
+	const destroySuccessReply = getLocalizedText(`delete snippet success`, interaction.locale, name)
 
 	await deferral
 
