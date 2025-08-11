@@ -1,5 +1,5 @@
+import { getLocalizedText } from "../../../locale/languages.mjs"
 import { createEditSnippetModal } from "../../../modals/edit-snippet-modal.mjs"
-import { createSetSnippetModal } from "../../../modals/set-snippet-modal.mjs"
 import Snippet from "../../../models/snippet.mjs"
 
 const editSnippet = async interaction => {
