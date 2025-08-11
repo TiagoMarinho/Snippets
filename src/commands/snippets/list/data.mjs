@@ -1,5 +1,4 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from "discord.js";
-import limits from '../../../shared/limits.json' assert { type: 'json' }
 
 // TODO: Add support for localization
 export default {
@@ -12,6 +11,11 @@ export default {
 			name: `page`,
 			description: `Page to start listing from`,
 			min_value: 1,
+		},
+		{
+			type: ApplicationCommandOptionType.User,
+			name: `author`,
+			description: `User to filter snippets by`,
 		},
 	]
 }

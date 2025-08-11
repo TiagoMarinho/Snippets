@@ -21,7 +21,8 @@
 	"set accent color success": "Accent color of snippet `{0}` is now {1}",
 	"clear accent color success": "Snippet `{0}` now has no accent color",
 
-	"list snippets embed description": "Your available snippets",
+	"list snippets embed description": "Available snippets",
+	"list snippets embed snippet name label": "Name",
 	"list snippets embed snippet title label": "Title",
 	"list snippets embed snippet content label": "Content",
 	"list snippets embed snippet uses label": "Uses",
