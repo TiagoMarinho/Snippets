@@ -1,3 +1,27 @@
 {
-	"snippet": "#a4d11e"
+	"blue": {
+		"name": "Blue",
+		"hex": "#66b9dd",
+		"emoji": "🔵"
+	},
+	"green": {
+		"name": "Green",
+		"hex": "#93d118",
+		"emoji": "🟢"
+	},
+	"yellow": {
+		"name": "Yellow",
+		"hex": "#ffce0a",
+		"emoji": "🟡"
+	},
+	"red": {
+		"name": "Red",
+		"hex": "#fd2d53",
+		"emoji": "🔴"
+	},
+	"purple": {
+		"name": "Purple",
+		"hex": "#735aff",
+		"emoji": "🟣"
+	}
 }

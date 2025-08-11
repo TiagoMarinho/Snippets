@@ -30,7 +30,15 @@ const getSnippetContainer = async snippet => {
 		const gallery = new MediaGalleryBuilder({ items: media })
 		components.push(gallery)
 	}
+	
 	const container = new ContainerBuilder({ components })
+
+	if (snippet.color) {
+		const colorHexStr = colors[snippet.color].hex
+		const color = parseInt(colorHexStr.substring(1), 16)
+		container
+			.setAccentColor(color)
+	}
 	
 	return container
 }

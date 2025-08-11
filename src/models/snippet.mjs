@@ -8,16 +8,37 @@ export default class Snippet extends Model {
 				primaryKey: true,
 				autoIncrement: true,
 			},
+
 			name: {
 				type: DataTypes.STRING,
+				allowNull: false,
 			},
-			title: DataTypes.STRING,
-			content: DataTypes.STRING,
+			title: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			content: {
+				type: DataTypes.TEXT,
+				allowNull: false,
+			},
+			color: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			footer: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			
 			usages: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0,
+				allowNull: false,
 			},
-			guildId: DataTypes.STRING,
+			guildId: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
 		}, {
 			sequelize,
 			modelName: 'Snippet',
