@@ -3,7 +3,6 @@ import { getLocalizedText } from "../../../locale/languages.mjs"
 import { limit } from "../../../utils/formatting.mjs"
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js"
 import emojis from '../../../shared/emojis.json' assert { type: 'json' }
-import colors from '../../../shared/colors.json' assert { type: 'json' }
 
 const ITEMS_PER_PAGE = 10
 
@@ -49,7 +48,6 @@ export const createListPage = async (interaction, pageNumber) => {
 	const listEmbedDescription = getLocalizedText(`list snippets embed description`, locale)
 	const embed = new EmbedBuilder()
 		.setDescription(listEmbedDescription)
-		.setColor(colors.snippet)
 		.setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
 		.addFields(...fields)
 
