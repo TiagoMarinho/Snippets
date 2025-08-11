@@ -80,7 +80,8 @@ const getSnippet = async interaction => {
 
 	const mostUsedSnippet = await Snippet.findOne({
 			where: { name, guildId },
-			order: [[`usages`, `DESC`]]
+			order: [[`usages`, `DESC`]],
+			include: { model: Attachment, as: 'attachments' }
 		})
 
 	if (!mostUsedSnippet) {
