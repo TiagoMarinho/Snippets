@@ -16,19 +16,14 @@ const editSnippet = async interaction => {
 		}
 	})
 
+	const snippetNotFoundReply = getLocalizedText(`snippet not found`, interaction.locale, name)
+	if (!snippet)
+		return await interaction.editReply(snippetNotFoundReply)
+
 	const modal = createEditSnippetModal(interaction.locale, snippet.id, snippet.name, snippet.title, snippet.content)
 
 	if (snippet)
 		return interaction.showModal(await modal).catch(console.error)
-
-	//const deferral = interaction.deferReply({ ephemeral: true })
-
-	const snippetNotFoundReply = getLocalizedText(`snippet not found`, interaction.locale, name)
-
-	//await deferral
-
-	if (!snippet)
-		return await interaction.editReply(snippetNotFoundReply)
 }
 
 export default editSnippet
