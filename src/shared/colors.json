@@ -14,6 +14,11 @@
 		"hex": "#ffce0a",
 		"emoji": "🟡"
 	},
+	"orange": {
+		"name": "Orange",
+		"hex": "#ff7b3b",
+		"emoji": "🟠"
+	},
 	"red": {
 		"name": "Red",
 		"hex": "#fd2d53",
