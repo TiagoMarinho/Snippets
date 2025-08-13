@@ -15,6 +15,7 @@
 	"attachment upload retrieval failed": "An error occurred after uploading. The uploaded file could not be retrieved",
 	"attachment db save failed": "An error occurred while saving the attachment to the database",
 	"attachment limit reached": "Snippet `{0}` has reached the maximum number of attachments (`{1}`)",
+	"attachment too large": "The attachment `{0}` is too large. The maximum file size is {1}",
 
 	"clear attachments success": "All attachments have been cleared from snippet `{0}`",
 

@@ -2,6 +2,7 @@ import { getLocalizedText } from "../../../../locale/languages.mjs"
 import Snippet from "../../../../models/snippet.mjs"
 import Attachment from "../../../../models/attachment.mjs"
 import limits from "../../../../shared/limits.json" assert { type: 'json' }
+import { formatBytes } from "../../../../utils/formatting.mjs"
 
 const addAttachment = async interaction => {
 	const deferral = interaction.deferReply({ ephemeral: true })
@@ -13,6 +14,13 @@ const addAttachment = async interaction => {
 	const description = interaction.options.getString("description")
 	const isSpoiler = interaction.options.getBoolean("spoiler") ?? false
 	const storageChannelId = process.env.STORAGE_CHANNEL_ID
+
+	if (file.size > limits.MAX_ATTACHMENT_SIZE_BYTES) {
+		const formattedLimit = formatBytes(limits.MAX_ATTACHMENT_SIZE_BYTES)
+		const reply = getLocalizedText("attachment too large", interaction.locale, file.name, formattedLimit)
+		await deferral
+		return interaction.editReply({ content: reply })
+	}
 
 	if (!storageChannelId) {
 		console.error("STORAGE_CHANNEL_ID is not configured in the .env file")
