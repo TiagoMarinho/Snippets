@@ -10,7 +10,7 @@ const handleNameAutocomplete = async (interaction, global = false) => {
 
 	const where = {
 		name: {
-			[Op.like]: `${name}%`,
+			[Op.like]: `%${name}%`,
 		},
 		guildId
 	}
