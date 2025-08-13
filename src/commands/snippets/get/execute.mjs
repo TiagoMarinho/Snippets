@@ -13,10 +13,10 @@ const getSnippetContainer = async snippet => {
 		components.push(title)
 	}
 
-	const content = new TextDisplayBuilder({
-		content: snippet.content
-	})
-	components.push(content)
+		const content = new TextDisplayBuilder({
+			content: snippet.content
+		})
+		components.push(content)
 
 	if (snippet.attachments?.length > 0) {
 		const media = snippet.attachments
@@ -45,13 +45,15 @@ const getSnippetContainer = async snippet => {
 
 const getSnippet = async interaction => {
 
-	const replyDeferral = interaction.deferReply()
-
 	const guildId = interaction.guild.id
 	const name = interaction.options.getString(`name`)
 	const mention = interaction.options.getUser(`mention`)
 	const user = interaction.options.getUser(`author`)
 	const userId = user?.id ?? interaction.user.id
+	const ephemeral = interaction.options.getBoolean(`private`) ?? false
+	const ephemeralFlag = ephemeral ? MessageFlags.Ephemeral : 0
+
+	const replyDeferral = interaction.deferReply({ flags: ephemeralFlag })
 
 	const components = []
 	if (mention) {
@@ -88,7 +90,7 @@ const getSnippet = async interaction => {
 		const snippetNotFoundReply = getLocalizedText(`snippet not found`, interaction.locale, name)
 		await replyDeferral
 		await interaction.deleteReply()
-		return interaction.followUp({ content: snippetNotFoundReply, ephemeral: true })
+		return interaction.followUp({ content: snippetNotFoundReply, flags: MessageFlags.Ephemeral })
 	}
 
 	const container = await getSnippetContainer(mostUsedSnippet)

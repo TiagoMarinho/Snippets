@@ -23,7 +23,12 @@ export default {
 		{
 			type: ApplicationCommandOptionType.User,
 			name: `author`,
-			description: `User this snippet belongs to (defaults to yourself)`,
+			description: `User this snippet belongs to`,
+		},
+		{
+			type: ApplicationCommandOptionType.Boolean,
+			name: `private`,
+			description: `Show this snippet as a message only you can see`,
 		},
 	]
 }
