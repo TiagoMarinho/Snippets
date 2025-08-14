@@ -1,7 +1,3 @@
-import { Op, Sequelize } from "sequelize"
-import Snippet from "../models/snippet.mjs"
-import User from "../models/user.mjs"
-
 import { nameAutocompleteCache } from '../cache/name-autocomplete-cache.mjs'
 
 const handleNameAutocomplete = async (interaction, global = false) => {
@@ -14,17 +10,12 @@ const handleNameAutocomplete = async (interaction, global = false) => {
 
 	const filteredSnippets = allSnippets
 		.filter(s => {
-			// First, filter by the correct user. authorId takes precedence.
 			if (authorId) return s.userId === authorId
-			// If no author is given and the command isn't global, show the user's own snippets.
 			if (!global) return s.userId === userId
-			// Otherwise (global command with no author), don't filter by user.
 			return true
 		})
 		.filter(s => {
-			// Then, filter the results by the text the user is typing.
 			if (focusedName) return s.name.toLowerCase().includes(focusedName)
-			// If the user hasn't typed anything, show all results from the first filter.
 			return true
 		})
 
