@@ -15,8 +15,12 @@ const handleNameAutocomplete = async (interaction, global = false) => {
 			return true
 		})
 		.filter(s => {
-			if (focusedName) return s.name.toLowerCase().includes(focusedName)
-			return true
+			if (!focusedName)
+				return true
+
+			const snippetNameMatch = s.name.toLowerCase().includes(focusedName)
+			const authorNameMatch = s.User.username.toLowerCase().includes(focusedName)
+			return snippetNameMatch || authorNameMatch
 		})
 
 	const choices = filteredSnippets
