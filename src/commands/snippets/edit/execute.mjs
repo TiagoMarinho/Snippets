@@ -1,3 +1,4 @@
+import { MessageFlags } from "discord.js"
 import { getLocalizedText } from "../../../locale/languages.mjs"
 import { createEditSnippetModal } from "../../../modals/edit-snippet-modal.mjs"
 import Snippet from "../../../models/snippet.mjs"
@@ -18,7 +19,7 @@ const editSnippet = async interaction => {
 
 	const snippetNotFoundReply = getLocalizedText(`snippet not found`, interaction.locale, name)
 	if (!snippet)
-		return await interaction.editReply(snippetNotFoundReply)
+		return await interaction.reply({ content: snippetNotFoundReply, flags: MessageFlags.Ephemeral })
 
 	const modal = createEditSnippetModal(interaction.locale, snippet.id, snippet.name, snippet.title, snippet.content)
 

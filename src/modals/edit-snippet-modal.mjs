@@ -3,6 +3,7 @@ import { getLocalizedText } from "../locale/languages.mjs"
 import User from "../models/user.mjs"
 import Snippet from "../models/snippet.mjs"
 import limits from '../shared/limits.json' assert { type: 'json' }
+import { nameAutocompleteCache } from "../cache/name-autocomplete-cache.mjs"
 
 export const createEditSnippetModal = async (locale, snippetId, name, title, content) => {
 	const [modalTitle, titleLabel, nameLabel, contentLabel] = [
@@ -79,6 +80,7 @@ export const handleEditSnippetModalSubmit = async interaction => {
 			guildId
 		}
 	})
+	nameAutocompleteCache.invalidate(guildId)
 
 	await replyDeferral
 	

@@ -3,6 +3,7 @@ import { AttachmentBuilder, ContainerBuilder, EmbedBuilder, MediaGalleryBuilder,
 import colors from '../../../shared/colors.json' assert { type: 'json' }
 import { getLocalizedText } from "../../../locale/languages.mjs"
 import Attachment from "../../../models/attachment.mjs"
+import { nameAutocompleteCache } from "../../../cache/name-autocomplete-cache.mjs"
 
 const getSnippetContainer = async snippet => {
 	const components = []
@@ -74,6 +75,7 @@ const getSnippet = async interaction => {
 
 	if (userSnippet) {
 		userSnippet.increment(`usages`)
+		nameAutocompleteCache.incrementUsage(guildId, name, userId)
 		const container = await getSnippetContainer(userSnippet)
 		await replyDeferral
 		components.push(container)
@@ -96,6 +98,7 @@ const getSnippet = async interaction => {
 	const container = await getSnippetContainer(mostUsedSnippet)
 	components.push(container)
 	mostUsedSnippet.increment(`usages`)
+	nameAutocompleteCache.incrementUsage(guildId, name, mostUsedSnippet.userId)
 
 	await replyDeferral
 	return interaction.editReply({ components, flags: MessageFlags.IsComponentsV2 })

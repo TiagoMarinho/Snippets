@@ -1,3 +1,4 @@
+import { nameAutocompleteCache } from "../../../cache/name-autocomplete-cache.mjs"
 import { getLocalizedText } from "../../../locale/languages.mjs"
 import Snippet from "../../../models/snippet.mjs"
 
@@ -26,6 +27,8 @@ const deleteSnippet = async (interaction) => {
 		return await interaction.editReply(snippetNotFoundReply)
 
 	await snippet.destroy()
+	
+	nameAutocompleteCache.invalidate(guildId)
 
 	return interaction.editReply({ content: destroySuccessReply})
 }
