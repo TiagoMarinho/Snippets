@@ -55,8 +55,6 @@ const getSnippet = async interaction => {
 	const ephemeral = interaction.options.getBoolean(`private`) ?? false
 	const ephemeralFlag = ephemeral ? MessageFlags.Ephemeral : 0
 
-	const replyDeferral = interaction.deferReply({ flags: ephemeralFlag })
-
 	const components = []
 	const mentionString = mention ? `<@${mention?.id}>` : null
 	const messageContent = [mentionString, text].join(" ")
@@ -80,9 +78,8 @@ const getSnippet = async interaction => {
 		userSnippet.increment(`usages`)
 		nameAutocompleteCache.incrementUsage(guildId, name, userId)
 		const container = await getSnippetContainer(userSnippet)
-		await replyDeferral
 		components.push(container)
-		return interaction.editReply({ components, flags: MessageFlags.IsComponentsV2 })
+		return interaction.reply({ components, flags: MessageFlags.IsComponentsV2 | ephemeralFlag })
 	}
 
 	const mostUsedSnippet = await Snippet.findOne({
@@ -93,9 +90,7 @@ const getSnippet = async interaction => {
 
 	if (!mostUsedSnippet) {
 		const snippetNotFoundReply = getLocalizedText(`snippet not found`, interaction.locale, name)
-		await replyDeferral
-		await interaction.deleteReply()
-		return interaction.followUp({ content: snippetNotFoundReply, flags: MessageFlags.Ephemeral })
+		return interaction.reply({ content: snippetNotFoundReply, flags: MessageFlags.Ephemeral })
 	}
 
 	const container = await getSnippetContainer(mostUsedSnippet)
@@ -103,8 +98,7 @@ const getSnippet = async interaction => {
 	mostUsedSnippet.increment(`usages`)
 	nameAutocompleteCache.incrementUsage(guildId, name, mostUsedSnippet.userId)
 
-	await replyDeferral
-	return interaction.editReply({ components, flags: MessageFlags.IsComponentsV2 })
+	return interaction.reply({ components, flags: MessageFlags.IsComponentsV2 })
 }
 
 export default getSnippet

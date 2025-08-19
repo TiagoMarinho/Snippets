@@ -19,7 +19,7 @@ export default class Snippet extends Model {
 			},
 			content: {
 				type: DataTypes.TEXT,
-				allowNull: false,
+				allowNull: true,
 			},
 			color: {
 				type: DataTypes.STRING,
@@ -48,6 +48,9 @@ export default class Snippet extends Model {
 				{
 					unique: true,
 					fields: ['name', 'userId', 'guildId']
+				},
+				{
+					fields: ['name', 'guildId']
 				}
 			]
 		})
