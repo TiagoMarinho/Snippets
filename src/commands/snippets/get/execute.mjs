@@ -50,6 +50,7 @@ const getSnippet = async interaction => {
 	const name = interaction.options.getString(`name`)
 	const mention = interaction.options.getUser(`mention`)
 	const user = interaction.options.getUser(`author`)
+	const text = interaction.options.getString(`text`)
 	const userId = user?.id ?? interaction.user.id
 	const ephemeral = interaction.options.getBoolean(`private`) ?? false
 	const ephemeralFlag = ephemeral ? MessageFlags.Ephemeral : 0
@@ -57,11 +58,13 @@ const getSnippet = async interaction => {
 	const replyDeferral = interaction.deferReply({ flags: ephemeralFlag })
 
 	const components = []
-	if (mention) {
-		const mentionText = new TextDisplayBuilder({
-			content: `<@${mention?.id}>`
+	const mentionString = mention ? `<@${mention?.id}>` : null
+	const messageContent = [mentionString, text].join(" ")
+	if (mention || text) {
+		const messageTextDisplay = new TextDisplayBuilder({
+			content: messageContent
 		})
-		components.push(mentionText)
+		components.push(messageTextDisplay)
 	}
 
 	const userSnippet = await Snippet.findOne({

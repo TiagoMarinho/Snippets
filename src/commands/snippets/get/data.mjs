@@ -26,6 +26,11 @@ export default {
 			description: `User this snippet belongs to`,
 		},
 		{
+			type: ApplicationCommandOptionType.String,
+			name: `text`,
+			description: `Additional text to send with the snippet`,
+		},
+		{
 			type: ApplicationCommandOptionType.Boolean,
 			name: `private`,
 			description: `Show this snippet as a message only you can see`,
