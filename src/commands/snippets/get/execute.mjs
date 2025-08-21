@@ -98,7 +98,7 @@ const getSnippet = async interaction => {
 	mostUsedSnippet.increment(`usages`)
 	nameAutocompleteCache.incrementUsage(guildId, name, mostUsedSnippet.userId)
 
-	return interaction.reply({ components, flags: MessageFlags.IsComponentsV2 })
+	return interaction.reply({ components, flags: MessageFlags.IsComponentsV2 | ephemeralFlag })
 }
 
 export default getSnippet
