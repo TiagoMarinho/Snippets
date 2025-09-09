@@ -1,10 +1,7 @@
-# fly.toml
-
 app = "snippets"
 primary_region = "fra"
 
 [build]
-  builder = "fly-apps/bun"
 
 [env]
   DATABASE_PATH = "/data/database.sqlite"
@@ -16,5 +13,5 @@ primary_region = "fra"
   app = "bun run start"
 
 [mounts]
-  source="snippets_data"
-  destination="/data"
+  source = "snippets_data"
+  destination = "/data"
