@@ -4,16 +4,16 @@ app = "snippets"
 primary_region = "fra"
 
 [build]
-  builder = "paketobuildpacks/builder:base"
+  builder = "fly-apps/bun"
 
 [env]
   DATABASE_PATH = "/data/database.sqlite"
 
 [deploy]
-  release_command = "npm run register"
+  release_command = "bun run register"
 
 [processes]
-  app = "npm run start"
+  app = "bun run start"
 
 [mounts]
   source="snippets_data"
